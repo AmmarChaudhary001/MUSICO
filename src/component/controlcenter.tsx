@@ -1,10 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import TrackPlayer, { PlaybackState, useIsPlaying, usePlaybackState } from '@rntp/player'
-// Use require to avoid TypeScript module-not-found for vector icons
-// and treat the imported icon as any to bypass missing type declarations.
-// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-explicit-any
-const Icon: any = require('react-native-vector-icons/MaterialIcons')
+import TrackPlayer, { useIsPlaying, usePlaybackState } from '@rntp/player'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ControlCenter = () => {
     const isPlaying = useIsPlaying()
