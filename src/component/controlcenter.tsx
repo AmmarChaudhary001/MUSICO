@@ -1,45 +1,44 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import React from 'react'
-import TrackPlayer, { useIsPlaying, usePlaybackState } from '@rntp/player'
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import TrackPlayer, { useIsPlaying } from '@rntp/player'
+import { MaterialIcons } from '@react-native-vector-icons/material-icons/static'
 
 const ControlCenter = () => {
     const isPlaying = useIsPlaying()
-    const playerState = usePlaybackState() // PlaybackState enum: idle | ready | buffering | ended | error
 
-    const skipToNext = async () => {
-        await TrackPlayer.skipToNext()
+    const skipToNext = () => {
+        TrackPlayer.skipToNext()
     }
 
-    const togglePlayPause = async () => {
-        const currentTrackIndex = await TrackPlayer.getActiveMediaItemIndex()
+    const togglePlayPause = () => {
+        const currentTrackIndex = TrackPlayer.getActiveMediaItemIndex()
 
         if (currentTrackIndex !== null) {
             if (!isPlaying) {
-                await TrackPlayer.play()
+                TrackPlayer.play()
             } else {
-                await TrackPlayer.pause()
+                TrackPlayer.pause()
             }
         }
     }
 
-    const skipToPrevious = async () => {
-        await TrackPlayer.skipToPrevious()
+    const skipToPrevious = () => {
+        TrackPlayer.skipToPrevious()
     }
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={skipToNext}>
-        <Icon style={styles.icon} name='skip-next' size={40} />
+      <Pressable onPress={skipToPrevious}>
+         <MaterialIcons style={styles.icon} name="skip-previous" size={40} />
       </Pressable>
       <Pressable onPress={togglePlayPause}>
-        <Icon 
+         <MaterialIcons
          style={styles.icon}
-         name={isPlaying ? 'pause' : 'play-arrow'} 
-         size={70} />
+         name={isPlaying ? 'pause' : 'play-arrow'}
+         size={50} />
       </Pressable>
-      <Pressable onPress={skipToPrevious}>
-        <Icon style={styles.icon} name='skip-previous' size={40} />
+      <Pressable onPress={skipToNext}>
+         <MaterialIcons style={styles.icon} name="skip-next" size={40} />
       </Pressable>
     </View>
   )

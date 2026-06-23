@@ -1,35 +1,34 @@
-import { 
+import {
     StyleSheet,
-    Text, 
-    View, 
-    FlatList, 
-    Image, 
-    Dimensions
+    View,
+    FlatList,
+    Image,
+    Dimensions,
 } from 'react-native'
 
 import React from 'react'
 
 import { playListData } from '../constants'
-import ControlCenter from '../component/controlcenter.tsx'
-import SongSlider from '../component/slider.tsx'
-import SongInfo from '../component/songinfo.tsx'
+import ControlCenter from '../component/controlcenter'
+import SongSlider from '../component/slider'
+import SongInfo from '../component/songinfo'
 
-import { useActiveMediaItem } from '@rntp/player'
+import { useActiveMediaItem, MediaItem } from '@rntp/player'
 
 const { width } = Dimensions.get('window')
 
 export default function Musicplayer() {
     const track = useActiveMediaItem() // MediaItem | null, auto-updates
 
-    const renderArtWork = () => {
+    const renderArtWork = ({item}:{item:MediaItem}) => {
         return (
             <View style={styles.listArtWrapper}>
                 <View style={styles.albumContainer}>
-                    {track?.artworkUrl && (
+                    {item?.artworkUrl && (
                         <Image 
                             style={styles.albumArtImg}
                             source={{
-                                uri: track?.artworkUrl?.toString()
+                                uri: item?.artworkUrl?.toString()
                             }} />
                     )}
                 </View>
@@ -38,12 +37,12 @@ export default function Musicplayer() {
     }
   return (
     <View style={styles.container}>
-        <FlatList 
+        <FlatList<MediaItem>
             horizontal={true}
             data={playListData}
             renderItem={renderArtWork}
-            keyExtractor={song=>song.mediaId='string'}
-             />
+            keyExtractor={(_, index) => index.toString()}
+        />
 
         <SongInfo track={track} />
         <SongSlider />
@@ -61,15 +60,18 @@ const styles = StyleSheet.create({
     },
     listArtWrapper: {
       width: width,
+      height:400,
       justifyContent: 'center',
       alignItems: 'center',
     },
     albumContainer: {
       width: 300,
       height: 300,
+      backgroundColor:'#000'
     },
     albumArtImg: {
       height: '100%',
       borderRadius: 4,
+      
     },
 })
