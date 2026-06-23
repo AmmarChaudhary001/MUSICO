@@ -5,7 +5,6 @@ import { useProgress } from '@rntp/player'
 
 export default function SongSlider() {
     const {position, duration}=useProgress()
-    const remaining=new Date((duration-position)*1000).toISOString().substring(15,19)
 
   return (
     <View>
@@ -23,7 +22,7 @@ export default function SongSlider() {
               {new Date(position*1000).toISOString().substring(15,19)}
             </Text>
             <Text style={styles.time}>
-              {remaining}
+              {new Date(duration*1000).toISOString().substring(15,19)}
             </Text>
        </View>
     </View>
